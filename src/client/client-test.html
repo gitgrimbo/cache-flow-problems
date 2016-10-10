@@ -1,0 +1,40 @@
+<!doctype html>
+
+<head>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+</head>
+
+<body>
+
+<p>
+
+Loads the client.js file and prints the
+<code>performance.getEntriesByType("resources")</code> to the console.
+
+<p>
+
+Also loads Bootstrap and jQuery just to have some resources to log.
+
+<p>
+
+As of 10/10/2016, neither maxcdn nor cdnjs support the
+<code>Timing-Allow-Origin</code> header, so the cache-flow-problems API would
+not be able to determine if this page was cached or not.
+
+<ul>
+<li><a href="https://github.com/cdnjs/cdnjs/issues/3117">https://github.com/cdnjs/cdnjs/issues/3117</a>
+</ul>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+  crossorigin="anonymous"></script>
+<script src="../../dist/client.js"></script>
+
+<script>
+var resources = cacheFlowProblems.getResources();
+cacheFlowProblems.consoleTable(resources);
+console.log("This page is cached; null means cannot be determined, true means cached, false means uncached.", cacheFlowProblems.areEntriesCached(resources));
+</script>
+
+</body>

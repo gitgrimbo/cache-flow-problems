@@ -1,0 +1,106 @@
+<!doctype html>
+
+<style>
+html,
+body {
+  font-family: Tahoma;
+  font-size: 10pt;
+}
+h1 {
+  font-size: 14pt;
+}
+h2 {
+  font-size: 11pt;
+}
+table {
+  border-collapse: collapse;
+}
+th, td {
+  border: 1px solid lightgray;
+}
+th {
+  width: 5%;
+}
+th:first-child {
+  width: 33%;
+}
+.cached {
+  background-color: rgba(0, 128, 0, 0.5);
+}
+.uncached {
+  background-color: rgba(128, 0, 0, 0.5);
+}
+.cached.entry {
+  background-color: rgba(0, 128, 0, 0.2);
+}
+.uncached.entry {
+  background-color: rgba(128, 0, 0, 0.2);
+}
+.configuration {
+  background-color: rgba(0, 0, 128, 0.2);
+}
+</style>
+
+<p>This page shows the performance timing data for browsers visiting the test page.
+
+<p>If all the resources are considered to be cached/uncached, then the header row will be green/read.
+If a cached/uncached determination cannot be accurately made, the row is uncoloured.
+
+<p>If a single resource is considered to be cached/uncached, then its row will be green/red.
+If a cached/uncached determination cannot be accurately made, the row is uncoloured.
+
+<hr>
+
+<% configurations.forEach((configuration, configurationIndex) => { %>
+
+<% if (configurationIndex > 0) { %>
+<hr>
+<% } %>
+
+<div class="configuration">
+
+<h1><%= configuration.title %></h1>
+
+<code><%= JSON.stringify(configuration.opts) %></code>
+
+<p><%= configuration.description %>
+
+</div>
+
+<% funcs.getResults(configurationIndex).forEach(result => { %>
+
+<h2><%= result.name %></h2>
+
+Full User Agent: <code><%= result.userAgent %></code>
+<br>
+Page URL: <code><%= result.url %></code>
+
+<% if (result.entries) { %>
+<table cellpadding=0 cellspacing=0 border=0 width="100%">
+<thead>
+<tr class="<%= funcs.isCachedClass(result.isCached) %>">
+<% funcs.headers(result).forEach(header => { %>
+<th><%= header %></th>
+<% }); %>
+</tr>
+</thead>
+<tbody>
+<% result.entries.forEach(entry => { %>
+<tr class="entry <%= funcs.isCachedClass(entry.isCached) %>">
+<% funcs.row(entry).forEach(cell => { %>
+<td><%= cell %></td>
+<% }); %>
+</tr>
+<% }); %>
+</tbody>
+</table>
+
+<% } else { %>
+
+<p>No data.
+
+<% } // if/else %>
+
+<% }); // forEach result %>
+
+<% }); // forEach configurations %>

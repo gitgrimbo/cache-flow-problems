@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+  <script>
+  // https://davidwalsh.name/get-absolute-url
+  var getAbsoluteUrl = (function() {
+    var a;
+
+    return function(url) {
+      if (!a) a = document.createElement('a');
+      a.href = url;
+      return a.href;
+    };
+  })();
+
+  function getCrossDomainUrl(url) {
+    var port = Number(/\:(\d+)\//.exec(url)[1]) || 80;
+    return url.replace(port, port + 1);
+  }
+
+  function addScript(url, parent) {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = url;
+    (parent || document.getElementsByTagName("head")[0]).appendChild(script);
+  }
+
+  function addCss(url, parent) {
+    var link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = url;
+    (parent || document.getElementsByTagName("head")[0]).appendChild(link);
+  }
+
+  function addCrossDomainScript(selector, timingAllowOrigin) {
+    var script = document.querySelector(selector);
+    var url = getAbsoluteUrl(script.src);
+    if (timingAllowOrigin) {
+      url += "?timingAllowOrigin=true";
+    }
+    addScript(getCrossDomainUrl(url));
+  }
+
+  function addCrossDomainCss(selector, timingAllowOrigin) {
+    var link = document.querySelector(selector);
+    var url = getAbsoluteUrl(link.href);
+    if (timingAllowOrigin) {
+      url += "?timingAllowOrigin=true";
+    }
+    addCss(getCrossDomainUrl(url));
+  }
+  </script>
+
+  <title>Test</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="./favicon.ico">
+  <link id="css" href="./assets/css.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <span class="glyphicon glyphicon-asterisk"></span>
+
+  <script id="js" src="./assets/js.js"></script>
+
+  <script>
+  addCrossDomainScript("#js");
+  addCrossDomainScript("#js", true);
+  addCrossDomainCss("#css");
+  addCrossDomainCss("#css", true);
+  </script>
+
+</body>
+
+</html>

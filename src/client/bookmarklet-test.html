@@ -1,0 +1,21 @@
+<!doctype html>
+
+<script src="../../dist/bookmarklet.js"></script>
+
+<form action="/resources" method="post">
+<textarea name="formData"></textarea>
+<input type="submit">
+</form>
+
+<script>
+var f = document.querySelector("form");
+var ta = f.querySelector("textarea");
+f.onsubmit = function(e) {
+  console.log(e);
+  e.preventDefault();
+  e.stopPropagation();
+  var postData = cott.makePostData(cacheFlowProblems.getResources());
+  ta.value = JSON.stringify(postData);
+  f.submit();
+};
+</script>
