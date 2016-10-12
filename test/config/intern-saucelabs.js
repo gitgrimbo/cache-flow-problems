@@ -1,9 +1,10 @@
 /* eslint-env amd */
 define([
-  "intern/dojo/lang",
+  "intern/dojo/has",
   "./intern-functional",
-  "./env"
-], function(lang, config, env) {
+  "./env",
+  "intern/dojo/has!host-node?./server-manager"
+], function(has, config, env, ServerManager) {
   // iOS Safari doesn't support resource timing API.
   // http://caniuse.com/#feat=resource-timing
   var iPadOnIOS9 = {
@@ -20,36 +21,30 @@ define([
   config.cacheFlowProblems.findTimeout = 10 * 60 * 1000;
   config.cacheFlowProblems.asyncTimeout = 10 * 60 * 1000;
 
-  config = lang.assign({}, config, {
-    // Use SauceLabs.
-    tunnel: "SauceLabsTunnel",
-    tunnelOptions: {
-      port: 4445,
-      directDomains: ["*.github.io"]
-    },
+  // Use SauceLabs.
+  config.tunnel = "SauceLabsTunnel";
 
-    maxConcurrency: 1,
+  config.tunnelOptions = {
+    port: 4445
+  };
 
-    environments: [
-      //env("chrome", ["51", "50"], ["Windows 7", "OS X 10.11"]),
-      //env("firefox", ["47", "46"], ["Windows 7", "OS X 10.11"]),
-      //env("internet explorer", ["11", "10", "9"]),
-      //env("MicrosoftEdge", ["13"]),
-      //env("chrome", ["37"], "Windows 7"),
-      //env("firefox", ["31"], "Windows 7"),
-      //env("safari", ["9", "8"]),
-      //iPadOnIOS9
-    ],
-  });
+  config.maxConcurrency = 1;
 
-  config.environments = (function(min, max) {
-    var envs = [];
-    for (var i = min; i < max; i++) {
-      envs.push(env("firefox", "" + i, "Windows 7"));
-    }
-    return envs;
-  })(31, 47);
-  console.log(config.environments);
+  config.environments = [
+    //env("chrome", ["53", "52"], ["Windows 7", "OS X 10.11"]),
+    //env("firefox", ["48", "47"], ["Windows 7", "OS X 10.11"]),
+    //env("internet explorer", ["11", "10", "9"]),
+    // 12 and 14 not supported by SauceLabs
+    //env("MicrosoftEdge", ["13"]),
+    //env("chrome", ["37"], "Windows 7"),
+    //env("firefox", ["31"], "Windows 7"),
+    env("safari", ["9", "8"]),
+    //iPadOnIOS9
+  ];
+
+  if (has("host-node")) {
+    new ServerManager().handleStartAndStop(config);
+  }
 
   return config;
 });

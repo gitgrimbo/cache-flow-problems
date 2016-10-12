@@ -2,15 +2,10 @@
 define([
   "intern/dojo/node!../www-server/server"
 ], function(server) {
-  function setupLocalServer(config) {
-    console.log("setupLocalServer");
-    var localServerPort = 8083;
-
-    config.urlToCaptureEntriesFor = "http://localhost:" + localServerPort + "/test/www/";
-
+  function setupLocalServer(port) {
     console.log("setupLocalServer", "Starting test servers");
     return server.startServers({
-      httpPort: localServerPort
+      httpPort: port
     })
       .then(function(handle) {
         console.log("setupLocalServer", "Test servers started");

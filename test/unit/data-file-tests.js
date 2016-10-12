@@ -41,16 +41,26 @@ define([
     // Chrome 53 reload visit cached unknown.
     // Chrome 53 revisit visit cached due to all duration === 0.
     ["Chrome-53.0.2785.143", null, null, true],
+
     // FF 45+46 first visit not cached due to some transferSize > 0.
     // FF 45+46 reload visit not cached due to transferSize > 0.
     // FF 45+46 revisit visit cached unknown due to inconclusive xd transferSize values and some durations !== 0.
     ["Firefox-45.0", false, false, null],
     ["Firefox-46.0", false, false, null],
-    // IE 10+11 all unknown.
+
+    // IE 10+11 all no decision.
     ["IE-10.0", null, null, null],
     ["IE-11.0", null, null, null],
-    // IE9 no entries throws Error
-    ["IE-9.0", Error, Error, Error]
+
+    // IE9 does not support performance.getEntriesByType("resource"), so Error
+    ["IE-9.0", Error, Error, Error],
+
+    // Edge no decision
+    ["Edge-13.10586", null, null, null],
+
+    // Safari 8+9 do not support performance.getEntriesByType("resource"), so Error
+    ["Safari-8.0.8", Error, Error, Error],
+    ["Safari-9.1.2", Error, Error, Error]
   ];
 
   info.forEach(info => {
@@ -61,7 +71,7 @@ define([
 
     function addTest(browser, tag, expected, testName) {
       const filename = (browser + "-" + tag);
-      testName = testName || filename;
+      testName = testName || (filename + " expects cached decision=" + expected);
       suite[testName] = makeTest(filename, expected);
     }
 
@@ -72,20 +82,22 @@ define([
 
   // Tests with options
 
-  // FF reports small duration if cached.
-  suite["Firefox-45.0-revisit with opts"] = makeTest("Firefox-45.0-revisit", true, {
+  suite["Firefox-45.0 revisit reports small duration if cached"] = makeTest("Firefox-45.0-revisit", true, {
     durationThreshold: {
       cachedIfLowerThan: 5
     }
   });
-  // IE 10 reports small duration if cached.
-  suite["IE-10.0-revisit with opts"] = makeTest("IE-10.0-revisit", true, {
+  suite["IE-10.0 revisit reports small duration if cached"] = makeTest("IE-10.0-revisit", true, {
     durationThreshold: {
       cachedIfLowerThan: 5
     }
   });
-  // IE 11 reports small duration if cached.
-  suite["IE-11.0-revisit with opts"] = makeTest("IE-11.0-revisit", true, {
+  suite["IE-11.0 revisit reports small duration if cached"] = makeTest("IE-11.0-revisit", true, {
+    durationThreshold: {
+      cachedIfLowerThan: 5
+    }
+  });
+  suite["Edge-13.10586 revisit reports small duration if cached"] = makeTest("Edge-13.10586-revisit", true, {
     durationThreshold: {
       cachedIfLowerThan: 5
     }

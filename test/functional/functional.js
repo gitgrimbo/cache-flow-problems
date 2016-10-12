@@ -4,17 +4,16 @@ define([
   "intern!object",
   "./resources-collector"
 ], function(intern, registerSuite, ResourcesCollector) {
-  var config = intern.config;
-
   registerSuite({
     name: "functional",
 
     test() {
+      var config = intern.config;
       var cacheFlowProblems = config.cacheFlowProblems;
       var url = config.urlToCaptureEntriesFor;
       var session = this.remote.session.sessionId;
 
-      var resourcesCollector = new ResourcesCollector();
+      var resourcesCollector = new ResourcesCollector(config);
       return this.remote
         .setFindTimeout(cacheFlowProblems.findTimeout)
         .setExecuteAsyncTimeout(cacheFlowProblems.asyncTimeout)
