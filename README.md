@@ -115,7 +115,7 @@ cache, so the following generalisations must be made:
 
 - Chrome <54 - Duration will be zero or 'close to zero' (few ms) if the resource
   came from browser cache.
-- Chrome >=54? - [The Resource Timing API now supports transfer, encoded, and
+- Chrome 54 - [The Resource Timing API now supports transfer, encoded, and
   decoded size attributes, allowing developers to measure cache hit rates and
   byte usage](https://blog.chromium.org/2016/09/chrome-54-beta-custom-elements-v1.html).
 - IE11 - Check for duration as zero or 'close to zero' (few ms).
