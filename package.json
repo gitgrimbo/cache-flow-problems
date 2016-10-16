@@ -27,7 +27,7 @@
     "url": "https://github.com/gitgrimbo/cache-flow-problems.git"
   },
   "bugs": "https://github.com/gitgrimbo/cache-flow-problems/issues",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {},
   "devDependencies": {
     "async": "^2.0.1",
