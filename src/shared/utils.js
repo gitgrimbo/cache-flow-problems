@@ -43,7 +43,6 @@ function numberPropsToFixedWithDps(dps) {
 }
 
 module.exports = {
-  assign: dumbAssign,
   keysAndValuesToOb: keysAndValuesToOb,
   numberPropsToFixed: numberPropsToFixed,
   numberPropsToFixedWithDps: numberPropsToFixedWithDps,

@@ -1,5 +1,5 @@
 /* eslint-env browser */
-var makePostData = require("./beacon").makePostData;
+var makePostData = require("./make-post-data");
 
 module.exports = function addTextArea(origin, resources, session, tag, addTo) {
   var data = makePostData(origin, resources, session, tag);

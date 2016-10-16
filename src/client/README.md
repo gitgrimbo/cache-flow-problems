@@ -3,8 +3,13 @@
 [Browserify](http://browserify.org/) is used to build the client dist file and
 the bookmarklet dist file to `dist/`.
 
-    npm run build-client
-    npm run build-bk
+    npm run build-all
+
+You can watch the source files and do auto-builds by:
+
+    npm run watch
+
+The built files will appear in the `./dist` folder.
 
 ---
 
@@ -13,7 +18,12 @@ the bookmarklet dist file to `dist/`.
 The bookmarklet collects Resource Timing information and POSTs it to the
 capture server.
 
-E.g. running the bookmarklet for the page
+To use a bookmarket, copy its content from the `./dist/` folder after a build
+and create a new bookmark in your browser, with a `javascript:` prefix.  E.g.:
+
+`javascript:COPIED_CONTENTS`
+
+Running the bookmarklet for the page
 [https://en.wikipedia.org/wiki/Main_Page](https://en.wikipedia.org/wiki/Main_Page)
 on Chrome 54 with an empty cache, will POST the results to the
 [capture server](../capture-server/README.md), as well as outputting the

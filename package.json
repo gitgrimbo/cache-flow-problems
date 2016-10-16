@@ -4,18 +4,29 @@
   "description": "Was your site loaded from cache?",
   "main": "src/capture-server",
   "scripts": {
-    "build-all": "npm run build-client && npm run build-bk && npm run build-api",
-    "build-api": "browserify --standalone cacheQueryApi src/shared/cache-query.js > dist/api.js",
-    "build-bk": "browserify src/client/bookmarklet.js > dist/bookmarklet.js",
-    "build-client": "browserify src/client/index.js > dist/client.js",
+    "browserify-all": "npm run browserify-client && npm run browserify-bk-browser && npm run browserify-bk-server && npm run browserify-api",
+    "browserify-api": "browserify --standalone cacheQueryApi src/shared/cache-query.js > dist/api.js",
+    "browserify-bk-browser": "browserify src/client/bookmarklet-client.js > dist/bookmarklet-client.js",
+    "browserify-bk-server": "browserify src/client/bookmarklet-server.js > dist/bookmarklet-server.js",
+    "browserify-client": "browserify src/client/index.js > dist/client.js",
+    "build-all": "npm run build-client && npm run build-bk-browser && npm run build-bk-server && npm run build-api",
+    "build-api": "npm run browserify-api && npm run min-api",
+    "build-bk-browser": "npm run browserify-bk-browser && npm run min-bk-browser",
+    "build-bk-server": "npm run browserify-bk-server && npm run min-bk-server",
+    "build-client": "npm run browserify-client && npm run min-client",
     "capture-server": "node src/capture-server",
     "deploy-gh-pages": "node src/results-page/deploy.js",
-    "min-all": "npm run build-all && npm run min-client && npm run min-bk && npm run min-api",
+    "min-all": "npm run min-client && npm run min-bk-browser && npm run min-bk-server && npm run min-api",
     "min-api": "uglifyjs dist/api.js --compress --mangle -o dist/api.min.js",
-    "min-bk": "uglifyjs dist/bookmarklet.js --compress --mangle -o dist/bookmarklet.min.js",
+    "min-bk-browser": "uglifyjs dist/bookmarklet-client.js --compress --mangle -o dist/bookmarklet-client.min.js",
+    "min-bk-server": "uglifyjs dist/bookmarklet-server.js --compress --mangle -o dist/bookmarklet-server.min.js",
     "min-client": "uglifyjs dist/client.js --compress --mangle -o dist/client.min.js",
     "test": "node node_modules/intern/bin/intern-runner.js config=test/config/intern-functional-standalone",
-    "unit-test": "node node_modules/intern/bin/intern-client.js config=test/config/intern-base"
+    "unit-test": "node node_modules/intern/bin/intern-client.js config=test/config/intern-base",
+    "watch": "npm-watch"
+  },
+  "watch": {
+    "build-all": "src/client/*.js"
   },
   "author": {
     "name": "gitgrimbo",

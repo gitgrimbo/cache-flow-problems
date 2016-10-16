@@ -1,13 +1,10 @@
 /* eslint-env browser */
 var entriesUtils = require("../shared/entries-utils");
-var beacon = require("./beacon");
+var getScriptOrigin = require("./script-origin");
 var scriptLoader = require("./script-loader");
-var addTextArea = require("./add-textarea");
 var log = require("./log");
 
 var getResources = entriesUtils.getResources;
-var postResources = beacon.postResources;
-var getScriptOrigin = beacon.getScriptOrigin;
 
 /* Use this style comment for bookmarklet */
 
@@ -31,22 +28,20 @@ function run(secureSrc, insecureSrc) {
     }
 
     /* cacheFlowProblems should now be in the global namespace. */
+    var cfp = cacheFlowProblems;
     var resources = getResources();
     log("resource count=" + resources.length);
-    cacheFlowProblems.consoleTableFake(resources);
+    cfp.consoleTableFake(resources);
 
     var session = rfc4122();
     var tag = "";
     var origin = getScriptOrigin();
-    postResources(origin, session, tag, postok, posterror);
+    cfp.postResources(origin, session, tag, postok, posterror);
   }
 
-  function onerror() {
-    var resources = getResources();
-    var session = rfc4122();
-    var tag = "";
-    var origin = getScriptOrigin();
-    addTextArea(origin, resources, session, tag);
+  function onerror(err) {
+    log("error loading client script");
+    log(err);
   }
 
   scriptLoader.addScriptsUntilSuccessful({

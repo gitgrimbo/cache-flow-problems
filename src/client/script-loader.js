@@ -1,8 +1,6 @@
 /* eslint-env browser */
-var utils = require("../shared/utils");
+var dumbAssign = require("../shared/dumb-assign");
 var log = require("./log");
-
-var assign = utils.assign;
 
 function addScript(opts) {
   opts = opts || {};
@@ -22,18 +20,20 @@ function addScript(opts) {
 
 function addScriptsUntilSuccessful(opts) {
   function add(i) {
-    addScript(assign({}, opts, {
-      src: opts.srcs[i],
+    var src = opts.srcs[i];
+    addScript(dumbAssign({}, opts, {
+      src: src,
       onload: function() {
-        log("addScriptsUntilSuccessful.onload");
+        log("addScriptsUntilSuccessful.onload: " + src);
         if (opts.onload) {
           opts.onload.apply(this, arguments);
         }
       },
       onerror: function() {
-        log("addScriptsUntilSuccessful.onerror");
+        log("addScriptsUntilSuccessful.onerror:" + src);
+        i++;
         if (i < opts.srcs.length) {
-          add(i + 1);
+          add(i);
         } else if (opts.onerror) {
           opts.onerror.apply(this, arguments);
         }
