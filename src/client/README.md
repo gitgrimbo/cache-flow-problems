@@ -15,83 +15,83 @@ capture server.
 
 E.g. running the bookmarklet for the page
 [https://en.wikipedia.org/wiki/Main_Page](https://en.wikipedia.org/wiki/Main_Page)
-on Chrome 53 will POST the results to the
+on Chrome 54 with an empty cache, will POST the results to the
 [capture server](../capture-server/README.md), as well as outputting the
-following to the console with an empty browser cache:
+following to the console (Wikipedia is a good example as it includes the
+`Timing-Allow-Origin` HTTP response header):
 
 ```
-addScriptsUntilSuccessful.onload
-resource count=30
-                                                                  name     type  stTime   dur initType workSt redSt redEnd fetchSt  dnsSt dnsEnd connSt connEnd secureConnSt reqStart respSt respEnd
-https://en.wikipedia.org/w/load.p...tor.styles&only=styles&skin=vector resource   51.69  26.4     link      0     0      0   51.69  51.69  51.69  51.69   51.69            0    52.63  73.62   78.08
-https://en.wikipedia.org/w/load.p...s=startup&only=scripts&skin=vector resource   51.77  5.47   script      0     0      0   51.77  51.77  51.77  51.77   51.77            0    52.25  54.23   57.24
-https://en.wikipedia.org/w/load.p...ite.styles&only=styles&skin=vector resource   60.15  7.59     link      0     0      0   60.15  60.15  60.15  60.15   60.15            0    60.63  65.52   67.73
-https://upload.wikimedia.org/wiki...nneman_f9e_o_%28square_crop%29.jpg resource   60.25 32.98      img      0     0      0   60.25  60.25  60.25  60.25   60.25            0    67.92  91.19   93.22
-https://upload.wikimedia.org/wiki...can_Germander_%282981720555%29.jpg resource   60.33 35.21      img      0     0      0   60.33  60.33  60.33  60.33   60.33            0    67.91  93.42   95.54
-https://upload.wikimedia.org/wiki...thew_Geostationary_VIS-IR_2016.jpg resource   60.41 36.82      img      0     0      0   60.41  60.41  60.41  60.41   60.41            0    67.96  95.32   97.23
-https://upload.wikimedia.org/wiki...4ch_mit_Christhard_L%C3%A4pple.jpg resource    60.5  39.1      img      0     0      0    60.5   60.5   60.5   60.5    60.5            0    68.03  98.52   99.59
-https://upload.wikimedia.org/wiki...5px-Death_warrant_of_Charles_I.jpg resource   60.57 38.38      img      0     0      0   60.57  60.57  60.57  60.57   60.57            0    67.98  97.87   98.95
-https://upload.wikimedia.org/wiki...flight_-_east_of_Port_Stephens.jpg resource   60.66 54.29      img      0     0      0   60.66  60.66  60.66  60.66   60.66            0    67.93  100.4  114.95
-  https://upload.wikimedia.org/wikipedia/en/9/9d/Commons-logo-31px.png resource   60.73 40.36      img      0     0      0   60.73  60.73  60.73  60.73   60.73            0    67.97  99.38  101.09
-https://upload.wikimedia.org/wiki...i-logo.png/35px-Mediawiki-logo.png resource   60.81 57.56      img      0     0      0   60.81  60.81  60.81  60.81   60.81            0    67.97 115.81  118.37
-     https://upload.wikimedia.org/wikipedia/en/b/bc/Meta-logo-35px.png resource   60.88 60.51      img      0     0      0   60.88  60.88  60.88  60.88   60.88            0    68.99 118.95  121.39
-https://upload.wikimedia.org/wikipedia/en/7/7f/Wikibooks-logo-35px.png resource   61.39 58.65      img      0     0      0   61.39  61.39  61.39  61.39   61.39            0    69.14 118.53  120.04
-https://upload.wikimedia.org/wiki...ogo.svg/47px-Wikidata-logo.svg.png resource    61.5 60.08      img      0     0      0    61.5   61.5   61.5   61.5    61.5            0    69.09 119.19  121.57
- https://upload.wikimedia.org/wikipedia/en/6/60/Wikinews-logo-51px.png resource    61.6 63.12      img      0     0      0    61.6   61.6   61.6   61.6    61.6            0    69.06 121.16  124.72
-https://upload.wikimedia.org/wikipedia/en/4/46/Wikiquote-logo-51px.png resource    61.7  63.2      img      0     0      0    61.7   61.7   61.7   61.7    61.7            0    69.08 121.43   124.9
-https://upload.wikimedia.org/wiki...a/en/b/b6/Wikisource-logo-35px.png resource   61.79 63.29      img      0     0      0   61.79  61.79  61.79  61.79   61.79            0    69.06 121.66  125.08
-https://upload.wikimedia.org/wiki.../en/b/bf/Wikispecies-logo-35px.png resource   61.89 65.27      img      0     0      0   61.89  61.89  61.89  61.89   61.89            0    68.95 124.43  127.16
-https://upload.wikimedia.org/wiki.../en/e/e3/Wikiversity-logo-41px.png resource   61.99 65.35      img      0     0      0   61.99  61.99  61.99  61.99   61.99            0    68.67 124.33  127.34
-https://upload.wikimedia.org/wiki...px-Wikivoyage-Logo-v3-icon.svg.png resource   62.07 65.45      img      0     0      0   62.07  62.07  62.07  62.07   62.07            0    68.62 124.49  127.52
-https://upload.wikimedia.org/wiki...vg/35px-Wiktionary-logo-v2.svg.png resource   62.32 65.38      img      0     0      0   62.32  62.32  62.32  62.32   62.32            0    68.64 124.69  127.69
-           https://en.wikipedia.org/static/images/wikimedia-button.png resource   62.44     0      img      0     0      0   62.44  62.44  62.44  62.44   62.44            0    62.44  62.44   62.44
-  https://en.wikipedia.org/static/images/poweredby_mediawiki_88x31.png resource   62.53     0      img      0     0      0   62.53  62.53  62.53  62.53   62.53            0    62.53  62.53   62.53
-https://en.wikipedia.org/w/load.p...cripts&skin=vector&version=10bvo5q resource   74.49  4.57   script      0     0      0   74.49  74.49  74.49  74.49   74.49            0    74.84  75.19   79.06
-       https://en.wikipedia.org/static/images/project-logos/enwiki.png resource   95.85     0      css      0     0      0   95.85  95.85  95.85  95.85   95.85            0    95.85  95.85   95.85
-https://meta.wikimedia.org/w/inde..._tou_cc_4_a&uselang=en&debug=false resource  561.63 24.42   script      0     0      0  561.63      0      0      0       0            0        0      0  586.05
-https://upload.wikimedia.org/wiki...K.svg/70px-Wmf_logo_vert_K.svg.png resource  651.01     0      img      0     0      0  651.01 651.01 651.01 651.01  651.01            0   651.01 651.01  651.01
-https://upload.wikimedia.org/wiki...le.svg/70px-Cc.logo.circle.svg.png resource  651.17     0      img      0     0      0  651.17 651.17 651.17 651.17  651.17            0   651.17 651.17  651.17
-https://upload.wikimedia.org/wiki...a/commons/c/cb/Close_x_-_black.png resource  651.34     0      img      0     0      0  651.34 651.34 651.34 651.34  651.34            0   651.34 651.34  651.34
-                   https://localhost:8081/dist/client.js?1475832035472 resource 8060.29  9.98   script      0     0      0 8060.29      0      0      0       0            0        0      0 8070.27
+addScriptsUntilSuccessful.onload: https://localhost:8081/dist/client.js?1476619788286
+resource count=31
+                                                                  name type  stTime    dur initType workSt redSt redEnd fetchSt   dnsSt  dnsEnd  connSt connEnd secConnSt reqStart  respSt respEnd  txSz encBdSz decBdSz
+https://en.wikipedia.org/w/load.p...tor.styles&only=styles&skin=vector  res  206.05 175.26     link      0     0      0  206.05  206.05  206.05  206.05  206.05         0   209.86  378.25  381.31 12209   11568   51580
+https://en.wikipedia.org/w/load.p...s=startup&only=scripts&skin=vector  res  206.18 182.18   script      0     0      0  206.18  206.18  206.18  206.18  206.18         0   210.34  385.99  388.37 26019   25364   72214
+https://en.wikipedia.org/w/load.p...ite.styles&only=styles&skin=vector  res  206.31 176.33     link      0     0      0  206.31  206.31  206.31  206.31  206.31         0   210.42  381.53  382.63  6016    5391   20392
+https://upload.wikimedia.org/wiki...jpg/100px-Bobby_Robson_Cropped.jpg  res  217.19 334.68      img      0     0      0  217.19  217.19  217.19  217.19  217.19         0   385.04  550.57  551.87  6276    5639    5639
+https://upload.wikimedia.org/wiki...Khairul_Fahmi%27s_Wedding_2013.jpg  res   217.4 337.35      img      0     0      0   217.4   217.4   217.4   217.4   217.4         0   385.17   554.1  554.75  6431    5774    5774
+https://upload.wikimedia.org/wiki...g_Bhumibol_Adulyadej_2010-9-29.jpg  res  217.55 339.21      img      0     0      0  217.55  217.55  217.55  217.55  217.55         0    385.6  554.36  556.76  4985    4265    4265
+https://upload.wikimedia.org/wiki...x-MargaretSanger-Underwood.LOC.jpg  res  217.69 342.76      img      0     0      0  217.69  217.69  217.69  217.69  217.69         0   385.93  559.13  560.46  4405    3733    3733
+https://upload.wikimedia.org/wiki...s_and_jar_-_Google_Art_Project.jpg  res  217.83 346.99      img      0     0      0  217.83  217.83  217.83  217.83  217.83         0   386.27  559.62  564.81 33193   32384   32384
+  https://upload.wikimedia.org/wikipedia/en/9/9d/Commons-logo-31px.png  res  217.95 351.45      img      0     0      0  217.95  217.95  217.95  217.95  217.95         0   386.66  568.43   569.4  2340    1694    1694
+https://upload.wikimedia.org/wiki...i-logo.png/35px-Mediawiki-logo.png  res  218.07 504.58      img      0     0      0  218.07  218.07  218.07  218.07  218.07         0   552.43  722.02  722.65  6423    5718    5718
+     https://upload.wikimedia.org/wikipedia/en/b/bc/Meta-logo-35px.png  res  218.21 507.11      img      0     0      0  218.21  218.21  218.21  218.21  218.21         0   555.59  724.88  725.32  2267    1611    1611
+https://upload.wikimedia.org/wikipedia/en/7/7f/Wikibooks-logo-35px.png  res  218.34 510.06      img      0     0      0  218.34  218.34  218.34  218.34  218.34         0   557.77  727.58  728.39  2370    1722    1722
+https://upload.wikimedia.org/wiki...ogo.svg/47px-Wikidata-logo.svg.png  res  218.46 510.75      img      0     0      0  218.46  218.46  218.46  218.46  218.46         0   561.75  728.72   729.2  1134     436     436
+ https://upload.wikimedia.org/wikipedia/en/6/60/Wikinews-logo-51px.png  res  218.58 517.93      img      0     0      0  218.58  218.58  218.58  218.58  218.58         0   568.36  735.87  736.51  3560    2921    2921
+https://upload.wikimedia.org/wikipedia/en/4/46/Wikiquote-logo-51px.png  res  218.71    518      img      0     0      0  218.71  218.71  218.71  218.71  218.71         0   570.48  736.13  736.71  2034    1388    1388
+https://upload.wikimedia.org/wiki...a/en/b/b6/Wikisource-logo-35px.png  res  218.83    671      img      0     0      0  218.83  218.83  218.83  218.83  218.83         0   723.12  889.39  889.84  2930    2280    2280
+https://upload.wikimedia.org/wiki.../en/b/bf/Wikispecies-logo-35px.png  res  218.96 674.67      img      0     0      0  218.96  218.96  218.96  218.96  218.96         0   727.38  893.15  893.63  4296    3629    3629
+https://upload.wikimedia.org/wiki.../en/e/e3/Wikiversity-logo-41px.png  res  219.08 676.47      img      0     0      0  219.08  219.08  219.08  219.08  219.08         0   729.02  894.96  895.55  1874    1227    1227
+https://upload.wikimedia.org/wiki...px-Wikivoyage-Logo-v3-icon.svg.png  res  219.22 676.52      img      0     0      0  219.22  219.22  219.22  219.22  219.22         0   730.08   895.2  895.74  1520     814     814
+https://upload.wikimedia.org/wiki...vg/35px-Wiktionary-logo-v2.svg.png  res  219.36 683.19      img      0     0      0  219.36  219.36  219.36  219.36  219.36         0   737.44  902.17  902.55  2247    1542    1542
+           https://en.wikipedia.org/static/images/wikimedia-button.png  res  219.49  350.4      img      0     0      0  219.49  219.49  219.49  219.49  219.49         0   386.73  569.02  569.89  3010    2426    2426
+  https://en.wikipedia.org/static/images/poweredby_mediawiki_88x31.png  res  219.61 350.03      img      0     0      0  219.61  219.61  219.61  219.61  219.61         0    386.8  568.68  569.63  2161    1585    1585
+       https://en.wikipedia.org/static/images/project-logos/enwiki.png  res  410.23 174.48      css      0     0      0  410.23  410.23  410.23  410.23  410.23         0   411.19  580.89  584.71 21242   20616   20616
+https://en.wikipedia.org/w/load.p...cripts&skin=vector&version=0f3xo9s  res  504.94 183.33   script      0     0      0  504.94  504.94  504.94  504.94  504.94         0   505.66  675.06  688.26 50783   50057  176338
+https://en.wikipedia.org/w/load.p...kibits&skin=vector&version=1hsthyo  res  746.56 170.64   script      0     0      0  746.56  746.56  746.56  746.56  746.56         0   747.27  916.65  917.21  5925    5317   17433
+https://en.wikipedia.org/w/load.p...faults&skin=vector&version=0c4iw0c  res  749.18 181.95   script      0     0      0  749.18  749.18  749.18  749.18  749.18         0   750.24  919.82  931.13 53342   52619  174955
+https://en.wikipedia.org/w/load.p...lector&skin=vector&version=0iyf74z  res  752.23 191.67   script      0     0      0  752.23  752.23  752.23  752.23  752.23         0   753.75  933.07   943.9 50926   50217  190868
+https://login.wikimedia.org/wiki/...e=script&wikiid=enwiki&proto=https  res  996.87 171.15   script      0     0      0  996.87       0       0       0       0         0        0       0 1168.02     0       0       0
+https://en.wikipedia.org/w/load.p...istory&skin=vector&version=0odikha  res 1095.36 170.04   script      0     0      0 1095.36 1095.36 1095.36 1095.36 1095.36         0  1097.98 1264.92 1265.39   861     253     471
+                 https://en.wikipedia.org/static/favicon/wikipedia.ico  res 1329.24 177.54               0     0      0 1329.24 1329.24 1329.24 1329.24 1329.24         0  1338.32 1506.25 1506.78  1638    1035    2734
+                   https://localhost:8081/dist/client.js?1476619788286  res  9417.1   7.26   script      0     0      0  9417.1       0       0       0       0         0        0       0 9424.37     0       0       0
 ```
 
 and the following after a revisit (note some of the `dur`ations are now zero,
 implying the resource was retrieved from browser cache):
 
 ```
-addScriptsUntilSuccessful.onload
-resource count=30
-                                                                  name     type  stTime   dur initType workSt redSt redEnd fetchSt  dnsSt dnsEnd connSt connEnd secureConnSt reqStart respSt respEnd
-https://en.wikipedia.org/w/load.p...tor.styles&only=styles&skin=vector resource  103.85 28.23     link      0     0      0  103.85 103.85 103.85 103.85  103.85            0   107.23 130.87  132.07
-https://en.wikipedia.org/w/load.p...s=startup&only=scripts&skin=vector resource  104.01 30.03   script      0     0      0  104.01 104.01 104.01 104.01  104.01            0   107.33 131.58  134.04
-https://en.wikipedia.org/w/load.p...ite.styles&only=styles&skin=vector resource   115.4 28.48     link      0     0      0   115.4  115.4  115.4  115.4   115.4            0   117.54 143.33  143.87
-https://upload.wikimedia.org/wiki...nneman_f9e_o_%28square_crop%29.jpg resource  115.58 25.35      img      0     0      0  115.58 115.58 115.58 115.58  115.58            0   118.18 140.38  140.94
-https://upload.wikimedia.org/wiki...can_Germander_%282981720555%29.jpg resource  115.93     0      img      0     0      0  115.93 115.93 115.93 115.93  115.93            0   115.93 115.93  115.93
-https://upload.wikimedia.org/wiki...thew_Geostationary_VIS-IR_2016.jpg resource  116.08 26.74      img      0     0      0  116.08 116.08 116.08 116.08  116.08            0   118.67 142.44  142.82
-https://upload.wikimedia.org/wiki...4ch_mit_Christhard_L%C3%A4pple.jpg resource  116.25 27.36      img      0     0      0  116.25 116.25 116.25 116.25  116.25            0   119.71  142.9  143.61
-https://upload.wikimedia.org/wiki...5px-Death_warrant_of_Charles_I.jpg resource  116.57     0      img      0     0      0  116.57 116.57 116.57 116.57  116.57            0   116.57 116.57  116.57
-https://upload.wikimedia.org/wiki...flight_-_east_of_Port_Stephens.jpg resource  116.89     0      img      0     0      0  116.89 116.89 116.89 116.89  116.89            0   116.89 116.89  116.89
-  https://upload.wikimedia.org/wikipedia/en/9/9d/Commons-logo-31px.png resource  117.18     0      img      0     0      0  117.18 117.18 117.18 117.18  117.18            0   117.18 117.18  117.18
-https://upload.wikimedia.org/wiki...i-logo.png/35px-Mediawiki-logo.png resource  117.48     0      img      0     0      0  117.48 117.48 117.48 117.48  117.48            0   117.48 117.48  117.48
-     https://upload.wikimedia.org/wikipedia/en/b/bc/Meta-logo-35px.png resource  117.78     0      img      0     0      0  117.78 117.78 117.78 117.78  117.78            0   117.78 117.78  117.78
-https://upload.wikimedia.org/wikipedia/en/7/7f/Wikibooks-logo-35px.png resource  118.11     0      img      0     0      0  118.11 118.11 118.11 118.11  118.11            0   118.11 118.11  118.11
-https://upload.wikimedia.org/wiki...ogo.svg/47px-Wikidata-logo.svg.png resource  118.43     0      img      0     0      0  118.43 118.43 118.43 118.43  118.43            0   118.43 118.43  118.43
- https://upload.wikimedia.org/wikipedia/en/6/60/Wikinews-logo-51px.png resource  118.73     0      img      0     0      0  118.73 118.73 118.73 118.73  118.73            0   118.73 118.73  118.73
-https://upload.wikimedia.org/wikipedia/en/4/46/Wikiquote-logo-51px.png resource  119.02     0      img      0     0      0  119.02 119.02 119.02 119.02  119.02            0   119.02 119.02  119.02
-https://upload.wikimedia.org/wiki...a/en/b/b6/Wikisource-logo-35px.png resource  119.33     0      img      0     0      0  119.33 119.33 119.33 119.33  119.33            0   119.33 119.33  119.33
-https://upload.wikimedia.org/wiki.../en/b/bf/Wikispecies-logo-35px.png resource  119.66     0      img      0     0      0  119.66 119.66 119.66 119.66  119.66            0   119.66 119.66  119.66
-https://upload.wikimedia.org/wiki.../en/e/e3/Wikiversity-logo-41px.png resource  119.96     0      img      0     0      0  119.96 119.96 119.96 119.96  119.96            0   119.96 119.96  119.96
-https://upload.wikimedia.org/wiki...px-Wikivoyage-Logo-v3-icon.svg.png resource  120.31     0      img      0     0      0  120.31 120.31 120.31 120.31  120.31            0   120.31 120.31  120.31
-https://upload.wikimedia.org/wiki...vg/35px-Wiktionary-logo-v2.svg.png resource  120.63     0      img      0     0      0  120.63 120.63 120.63 120.63  120.63            0   120.63 120.63  120.63
-           https://en.wikipedia.org/static/images/wikimedia-button.png resource  120.92     0      img      0     0      0  120.92 120.92 120.92 120.92  120.92            0   120.92 120.92  120.92
-  https://en.wikipedia.org/static/images/poweredby_mediawiki_88x31.png resource  121.21     0      img      0     0      0  121.21 121.21 121.21 121.21  121.21            0   121.21 121.21  121.21
-       https://en.wikipedia.org/static/images/project-logos/enwiki.png resource  178.98     0      css      0     0      0  178.98 178.98 178.98 178.98  178.98            0   178.98 178.98  178.98
-https://en.wikipedia.org/w/load.p...cripts&skin=vector&version=10bvo5q resource  275.73  4.21   script      0     0      0  275.73 275.73 275.73 275.73  275.73            0   276.13  276.6  279.94
-https://meta.wikimedia.org/w/inde..._tou_cc_4_a&uselang=en&debug=false resource  517.56 25.35   script      0     0      0  517.56      0      0      0       0            0        0      0  542.91
-https://upload.wikimedia.org/wiki...K.svg/70px-Wmf_logo_vert_K.svg.png resource  624.57     0      img      0     0      0  624.57 624.57 624.57 624.57  624.57            0   624.57 624.57  624.57
-https://upload.wikimedia.org/wiki...le.svg/70px-Cc.logo.circle.svg.png resource   625.1     0      img      0     0      0   625.1  625.1  625.1  625.1   625.1            0    625.1  625.1   625.1
-https://upload.wikimedia.org/wiki...a/commons/c/cb/Close_x_-_black.png resource  625.61     0      img      0     0      0  625.61 625.61 625.61 625.61  625.61            0   625.61 625.61  625.61
-                   https://localhost:8081/dist/client.js?1475832254853 resource 5404.23 38.76   script      0     0      0 5404.23      0      0      0       0            0        0      0 5442.99
+addScriptsUntilSuccessful.onload: https://localhost:8081/dist/client.js?1476619855246
+resource count=28
+                                                                  name type  stTime    dur initType workSt redSt redEnd fetchSt  dnsSt dnsEnd connSt connEnd secConnSt reqStart respSt respEnd txSz encBdSz decBdSz
+https://en.wikipedia.org/w/load.p...tor.styles&only=styles&skin=vector  res  182.98   9.03     link      0     0      0  182.98 182.98 182.98 182.98  182.98         0   186.97 189.48     192    0   11568   51580
+https://en.wikipedia.org/w/load.p...s=startup&only=scripts&skin=vector  res  183.14  11.86   script      0     0      0  183.14 183.14 183.14 183.14  183.14         0   187.28 191.67     195    0   25364   72214
+https://en.wikipedia.org/w/load.p...ite.styles&only=styles&skin=vector  res  183.31 176.34     link      0     0      0  183.31 183.31 183.31 183.31  183.31         0   190.14 359.09  359.66  602    5391   20392
+https://upload.wikimedia.org/wiki...jpg/100px-Bobby_Robson_Cropped.jpg  res  183.49  179.2      img      0     0      0  183.49 183.49 183.49 183.49  183.49         0   195.84 362.32  362.69  588    5639    5639
+https://upload.wikimedia.org/wiki...Khairul_Fahmi%27s_Wedding_2013.jpg  res  183.65 344.61      img      0     0      0  183.65 183.65 183.65 183.65  183.65         0   361.89 527.96  528.25  608    5774    5774
+https://upload.wikimedia.org/wiki...g_Bhumibol_Adulyadej_2010-9-29.jpg  res   183.8 344.93      img      0     0      0   183.8  183.8  183.8  183.8   183.8         0   361.98 528.38  528.72  671    4265    4265
+https://upload.wikimedia.org/wiki...x-MargaretSanger-Underwood.LOC.jpg  res  185.81      0      img      0     0      0  185.81 185.81 185.81 185.81  185.81         0   185.81 185.81  185.81    0    3733    3733
+https://upload.wikimedia.org/wiki...s_and_jar_-_Google_Art_Project.jpg  res  198.26      0      img      0     0      0  198.26 198.26 198.26 198.26  198.26         0   198.26 198.26  198.26    0   32384   32384
+  https://upload.wikimedia.org/wikipedia/en/9/9d/Commons-logo-31px.png  res  198.55      0      img      0     0      0  198.55 198.55 198.55 198.55  198.55         0   198.55 198.55  198.55    0    1694    1694
+https://upload.wikimedia.org/wiki...i-logo.png/35px-Mediawiki-logo.png  res  198.84      0      img      0     0      0  198.84 198.84 198.84 198.84  198.84         0   198.84 198.84  198.84    0    5718    5718
+     https://upload.wikimedia.org/wikipedia/en/b/bc/Meta-logo-35px.png  res  199.12      0      img      0     0      0  199.12 199.12 199.12 199.12  199.12         0   199.12 199.12  199.12    0    1611    1611
+https://upload.wikimedia.org/wikipedia/en/7/7f/Wikibooks-logo-35px.png  res  199.54      0      img      0     0      0  199.54 199.54 199.54 199.54  199.54         0   199.54 199.54  199.54    0    1722    1722
+https://upload.wikimedia.org/wiki...ogo.svg/47px-Wikidata-logo.svg.png  res  200.02      0      img      0     0      0  200.02 200.02 200.02 200.02  200.02         0   200.02 200.02  200.02    0     436     436
+ https://upload.wikimedia.org/wikipedia/en/6/60/Wikinews-logo-51px.png  res  200.49      0      img      0     0      0  200.49 200.49 200.49 200.49  200.49         0   200.49 200.49  200.49    0    2921    2921
+https://upload.wikimedia.org/wikipedia/en/4/46/Wikiquote-logo-51px.png  res  200.96      0      img      0     0      0  200.96 200.96 200.96 200.96  200.96         0   200.96 200.96  200.96    0    1388    1388
+https://upload.wikimedia.org/wiki...a/en/b/b6/Wikisource-logo-35px.png  res  201.44      0      img      0     0      0  201.44 201.44 201.44 201.44  201.44         0   201.44 201.44  201.44    0    2280    2280
+https://upload.wikimedia.org/wiki.../en/b/bf/Wikispecies-logo-35px.png  res  201.91      0      img      0     0      0  201.91 201.91 201.91 201.91  201.91         0   201.91 201.91  201.91    0    3629    3629
+https://upload.wikimedia.org/wiki.../en/e/e3/Wikiversity-logo-41px.png  res  202.38      0      img      0     0      0  202.38 202.38 202.38 202.38  202.38         0   202.38 202.38  202.38    0    1227    1227
+https://upload.wikimedia.org/wiki...px-Wikivoyage-Logo-v3-icon.svg.png  res  202.86      0      img      0     0      0  202.86 202.86 202.86 202.86  202.86         0   202.86 202.86  202.86    0     814     814
+https://upload.wikimedia.org/wiki...vg/35px-Wiktionary-logo-v2.svg.png  res  203.32      0      img      0     0      0  203.32 203.32 203.32 203.32  203.32         0   203.32 203.32  203.32    0    1542    1542
+           https://en.wikipedia.org/static/images/wikimedia-button.png  res  203.72      0      img      0     0      0  203.72 203.72 203.72 203.72  203.72         0   203.72 203.72  203.72    0    2426    2426
+  https://en.wikipedia.org/static/images/poweredby_mediawiki_88x31.png  res  204.05      0      img      0     0      0  204.05 204.05 204.05 204.05  204.05         0   204.05 204.05  204.05    0    1585    1585
+https://en.wikipedia.org/w/load.p...cripts&skin=vector&version=0f3xo9s  res   236.1 129.09   script      0     0      0   236.1  236.1  236.1  236.1   236.1         0    360.4 362.04  365.19    0   50057  176338
+       https://en.wikipedia.org/static/images/project-logos/enwiki.png  res   382.9      0      css      0     0      0   382.9  382.9  382.9  382.9   382.9         0    382.9  382.9   382.9    0   20616   20616
+https://en.wikipedia.org/w/load.p...kibits&skin=vector&version=1hsthyo  res  524.87   1.45   script      0     0      0  524.87 524.87 524.87 524.87  524.87         0   525.37 525.81  526.32    0    5317   17433
+https://en.wikipedia.org/w/load.p...faults&skin=vector&version=0c4iw0c  res  528.03   9.61   script      0     0      0  528.03 528.03 528.03 528.03  528.03         0   529.11 531.18  537.64    0   52619  174955
+https://en.wikipedia.org/w/load.p...lector&skin=vector&version=0iyf74z  res  531.49   7.21   script      0     0      0  531.49 531.49 531.49 531.49  531.49         0   532.15 534.06   538.7    0   50217  190868
+                   https://localhost:8081/dist/client.js?1476619855246  res 4380.15   4.61   script      0     0      0 4380.15      0      0      0       0         0        0      0 4384.76    0       0       0
 ```
 
 ## Content Security Policy

@@ -11,13 +11,14 @@ function makeTableOpts(opts) {
   var keys = [
     "name", "entryType", "startTime", "duration", "initiatorType", "workerStart", "redirectStart", "redirectEnd",
     "fetchStart", "domainLookupStart", "domainLookupEnd", "connectStart", "connectEnd", "secureConnectionStart",
-    "requestStart", "responseStart", "responseEnd"
+    "requestStart", "responseStart", "responseEnd",
+    "transferSize", "encodedBodySize", "decodedBodySize"
   ];
   // The headers to use.  Must match the order of "keys".
   var headers = [
     "name", "type", "stTime", "dur", "initType", "workSt", "redSt", "redEnd",
-    "fetchSt", "dnsSt", "dnsEnd", "connSt", "connEnd", "secureConnSt",
-    "reqStart", "respSt", "respEnd"
+    "fetchSt", "dnsSt", "dnsEnd", "connSt", "connEnd", "secConnSt",
+    "reqStart", "respSt", "respEnd", "txSz", "encBdSz", "decBdSz"
   ];
   return objectAssign({}, {
     dps: 2,
@@ -26,6 +27,33 @@ function makeTableOpts(opts) {
     keys: keys,
     headers: headers
   }, opts);
+}
+
+var resourceTypeMappings = {
+  frame: null,
+  mark: null,
+  measure: null,
+  navigation: "nav",
+  resource: "res",
+  server: null
+};
+
+var resourceInitiatorTypeMappings = {
+  xmlhttprequest: "xhr"
+};
+
+function shortenKnownValues(resource) {
+  if (resource.initiatorType in resourceInitiatorTypeMappings) {
+    resource = objectAssign({}, resource, {
+      initiatorType: resourceInitiatorTypeMappings[resource.initiatorType]
+    });
+  }
+  if (resource.entryType in resourceTypeMappings) {
+    resource = objectAssign({}, resource, {
+      entryType: resourceTypeMappings[resource.entryType]
+    });
+  }
+  return resource;
 }
 
 function _consoleTable(resources, opts) {
@@ -40,6 +68,7 @@ function consoleTableFake(resources, opts) {
   // The keys we want to show, and the order to show them.
 
   var rows = resources
+    .map(shortenKnownValues)
     // Only show numbers with fixed dps resolution.
     .map(numberPropsToFixedWithDps(opts.dps))
     // For the fake table we want all props to be strings
