@@ -61,7 +61,7 @@ Start local Selenium. E.g. if you have
 
 `java -jar selenium-server-standalone-x.y.z.jar`
 
-Run the [tests](test/intern/README.md). This will run tests, gather
+Run the [tests](test/README.md). This will run tests, gather
 data, and submit to the capture server. Edit the environments property in
 [intern-functional-standalone.js](test/config/intern-functional-standalone.js)
 for the browsers you have installed.
