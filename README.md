@@ -118,9 +118,6 @@ cache, so the following generalisations must be made:
 - Chrome 54 - [The Resource Timing API now supports transfer, encoded, and
   decoded size attributes, allowing developers to measure cache hit rates and
   byte usage](https://blog.chromium.org/2016/09/chrome-54-beta-custom-elements-v1.html).
-- IE11 - Check for duration as zero or 'close to zero' (few ms).
-- IE10 - Check for duration as zero or 'close to zero' (few ms).
-- IE9 - Resource Timing not supported.
 - Firefox 35-44 - Check for duration as zero or 'close to zero' (few ms).
 - Firefox >=45
   - if same-origin then check
@@ -134,6 +131,12 @@ cache, so the following generalisations must be made:
   - if cross-origin and fails the
     [timing allow check](https://w3c.github.io/resource-timing/#timing-allow-check)
     then use duration as above.
+- Edge 13 - Check for duration as zero or 'close to zero' (few ms).
+- Edge 14 - Check for duration as zero or 'close to zero' (few ms).
+- IE11 - Check for duration as zero or 'close to zero' (few ms).
+- IE10 - Check for duration as zero or 'close to zero' (few ms).
+- IE9 - Resource Timing not supported.
+- Safari 8 and 9 - Resource Timing not supported.
 
 # License
 
