@@ -1,6 +1,14 @@
 /* eslint-env node, shelljs */
+const fs = require("fs");
 const path = require("path");
 require("shelljs/global");
+const generate = require("./generate");
+
+function generateIndexHtml() {
+  const resultsPath = "./results/";
+  const filename = path.resolve(__dirname, "index.html");
+  return generate(filename, resultsPath);
+}
 
 const ghTemp = "./temp/gh-pages";
 const repo = require("../../package.json").repository.url;
@@ -13,15 +21,18 @@ if (!which("git")) {
 }
 
 rm("-rf", ghTemp);
-mkdir("-p", ghTemp);
 
+// git clone will also create the ghTemp folder
 exec("git clone " + repo + " --branch gh-pages --single-branch " + ghTemp);
 
-exec("node src/results-page/generate.js", { silent: true })
-  .to(path.resolve(ghTemp, "index.html"));
+generateIndexHtml()
+  .then(html => {
+    fs.writeFileSync(path.resolve(ghTemp, "index.html"), html);
 
-cd(ghTemp);
+    cd(ghTemp);
 
-exec("git add .");
-exec("git commit --amend --no-edit");
-exec("git push -f origin gh-pages");
+    exec("git add .");
+    exec("git commit --amend --no-edit");
+    exec("git push -f origin gh-pages");
+  })
+  .catch(err => console.error(err));

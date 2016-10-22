@@ -49,6 +49,13 @@ If a cached/uncached determination cannot be accurately made, the row is uncolou
 <p>If a single resource is considered to be cached/uncached, then its row will be green/red.
 If a cached/uncached determination cannot be accurately made, the row is uncoloured.
 
+<p>Browsers tested:
+<ul>
+<% browsersTested.forEach(browser => { %>
+<li><%= browser %>
+<% }); %>
+</ul>
+
 <hr>
 
 <% configurations.forEach((configuration, configurationIndex) => { %>
@@ -67,9 +74,9 @@ If a cached/uncached determination cannot be accurately made, the row is uncolou
 
 </div>
 
-<% funcs.getResults(configurationIndex).forEach(result => { %>
+<% funcs.getResults(configurationIndex).forEach((result, resultIdx) => { %>
 
-<h2><%= result.name %></h2>
+<h2><a name="result-<%= configurationIndex %>-<%= resultIdx %>"></a><%= result.name %></h2>
 
 Full User Agent: <code><%= result.userAgent %></code>
 <br>

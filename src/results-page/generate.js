@@ -7,10 +7,7 @@ const cacheQuery = require("../shared/cache-query");
 const decompress = require("../shared/entries-utils").decompress;
 const makeTableData = require("../cli/show-captures/show-captures").makeTableData;
 
-const resultsPath = "./results/";
-const filename = path.resolve(__dirname, "index.html");
-
-function loadResults() {
+function loadResults(resultsPath) {
   return fsp.readdir(resultsPath)
     .then(files => {
       // full paths
@@ -25,18 +22,26 @@ function resultsToTemplateData(results) {
     r.isCached = null;
     if (r.entries) {
       r.entries = decompress(r.entries);
-      r.entries.forEach(e => e.isCached = cacheQuery.isEntryCached(e));
+      r.entries.forEach(e => {
+        e.isCached = cacheQuery.isEntryCached(e);
+      });
       r.isCached = cacheQuery.areEntriesCached(r.entries);
     }
     const ua = useragent.parse(r.userAgent);
-    r.name = ua.browser + " " + ua.version + " " + ua.os + " / " + r.tag;
+    r.browser = ua.browser + " " + ua.version + " " + ua.os;
+    r.name = r.browser + " / " + r.tag;
     return r;
   });
 }
 
-function generate(templateStr, results) {
+function generateFromTemplateAndResults(templateStr, results) {
   let tableData = null;
   results = resultsToTemplateData(results);
+
+  const browsersTested = Object.keys(results.reduce((ob, r) => {
+    ob[r.browser] = 1;
+    return ob;
+  }, {}));
 
   const configurations = [
     {
@@ -78,7 +83,9 @@ function generate(templateStr, results) {
     results.forEach(r => {
       r.isCached = null;
       if (r.entries) {
-        r.entries.forEach(e => e.isCached = cacheQuery.isEntryCached(e, opts));
+        r.entries.forEach(e => {
+          e.isCached = cacheQuery.isEntryCached(e, opts);
+        });
         r.isCached = cacheQuery.areEntriesCached(r.entries, opts);
       }
       return r;
@@ -87,6 +94,7 @@ function generate(templateStr, results) {
   }
 
   const data = {
+    browsersTested,
     configurations,
     funcs: {
       getResults,
@@ -105,12 +113,16 @@ function generate(templateStr, results) {
     compileDebug: true
   };
   const html = ejs.render(String(templateStr), data, renderOpts);
-  console.log(html);
+  return html;
 }
 
-Promise.all([fsp.readFile(filename), loadResults()])
-  .then(things => {
-    const templateStr = things[0];
-    const results = things[1];
-    generate(templateStr, results);
-  });
+function generate(filename, resultsPath) {
+  return Promise.all([fsp.readFile(filename), loadResults(resultsPath)])
+    .then(things => {
+      const templateStr = things[0];
+      const results = things[1];
+      return generateFromTemplateAndResults(templateStr, results);
+    });
+}
+
+module.exports = generate;
